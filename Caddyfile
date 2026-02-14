@@ -1,9 +1,0 @@
-{
-	frankenphp
-	admin off
-}
-
-:80 {
-	root * /app/src
-	php_server
-}
