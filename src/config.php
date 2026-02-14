@@ -23,3 +23,5 @@ $config['delete_messages_older_than'] = getenv('DELETE_OLDER_THAN') ?: '30 days 
 $config['blocked_usernames'] = array_map('trim', explode(',', getenv('BLOCKED_USERNAMES') ?: 'root,admin,administrator,hostmaster,postmaster,webmaster'));
 
 $config['prefer_plaintext'] = getenv('PREFER_PLAINTEXT') !== 'false';
+
+ini_set('max_execution_time', getenv('MAX_EXECUTION_TIME') ?: '1000');

@@ -15,7 +15,7 @@ $purifier_config->set('HTML.Nofollow', true);
 $purifier_config->set('HTML.ForbiddenElements', array("img"));
 $purifier = new HTMLPurifier($purifier_config);
 
-\Moment\Moment::setLocale($config['locale']);
+Carbon\Carbon::setLocale($config['locale']);
 
 $mailIds = array_map(function ($mail) {
     return $mail->id;
@@ -24,8 +24,7 @@ $mailIdsJoinedString = filter_var(join('|', $mailIds), FILTER_SANITIZE_SPECIAL_C
 
 // define bigger renderings here to keep the php sections within the html short.
 function niceDate($date) {
-    $m = new \Moment\Moment($date, date_default_timezone_get());
-    return $m->calendar();
+    return Carbon\Carbon::parse($date, date_default_timezone_get())->calendar();
 }
 
 function printMessageBody($email, $purifier) {
