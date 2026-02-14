@@ -10,10 +10,9 @@ COPY composer.json composer.lock ./
 RUN composer install --no-dev --optimize-autoloader --ignore-platform-reqs
 
 COPY src/ /app/src/
-
-ENV SERVER_NAME=:80
+COPY Caddyfile /etc/caddy/Caddyfile
 
 EXPOSE 80
 
 ENTRYPOINT ["frankenphp"]
-CMD ["php-server", "--root", "/app/src"]
+CMD ["run", "--config", "/etc/caddy/Caddyfile"]
