@@ -8,7 +8,6 @@ services:
         required: false
     volumes:
       - ./src:/app/src
-      - ./config:/app/config
     environment:
       - SERVER_NAME=:80
       - DEBUG=true
