@@ -1,11 +1,29 @@
 <?php
 
 /**
- * searches for a config-file in the current and parent directories until found.
+ * Loads .env file if present (does not override existing env vars).
+ */
+function load_dotenv() {
+    $dotenv_path = __DIR__ . '/..';
+    if (file_exists($dotenv_path . '/.env')) {
+        $dotenv = Dotenv\Dotenv::createImmutable($dotenv_path);
+        $dotenv->safeLoad();
+    }
+}
+
+/**
+ * searches for a config-file: first in the config/ directory (recommended),
+ * then falls back to current and parent directories.
  * @return path to found config file, or FALSE otherwise.
  */
 function find_config($filename='config.php') {
-    // Count the deph of the current directory, so we know how far we can go up.
+    // Check the config/ directory first (relative to src/)
+    $data_config = __DIR__ . '/../config/' . $filename;
+    if (file_exists($data_config)) {
+        return $data_config;
+    }
+
+    // Fallback: walk up from current directory
     $path_length = substr_count(getcwd(), DIRECTORY_SEPARATOR)
         + 1; // also search the current directory
 
@@ -22,10 +40,13 @@ function find_config($filename='config.php') {
 }
 
 /**
- * searches and loads the config file. Prints an error if not found.
+ * Loads .env then searches and loads the config file. Prints an error if not found.
  */
 function load_config() {
     global $config;
+
+    load_dotenv();
+
     $file = find_config();
     if ($file !== false) {
         require_once($file);

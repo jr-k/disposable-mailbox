@@ -5,5 +5,5 @@
 *.md
 docs/
 src/vendor/
-src/config.php
+.env
 .DS_Store

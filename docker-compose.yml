@@ -1,0 +1,14 @@
+services:
+  app:
+    build: .
+    ports:
+      - "6080:80"
+    env_file:
+      - path: .env
+        required: false
+    volumes:
+      - ./src:/app/src
+      - ./config:/app/config
+    environment:
+      - SERVER_NAME=:80
+      - DEBUG=true
