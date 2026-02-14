@@ -9,6 +9,7 @@ services:
     volumes:
       - ./src:/app/src
       - /app/src/vendor
+    restart: unless-stopped
     environment:
       - SERVER_NAME=:80
       - DEBUG=true
