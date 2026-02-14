@@ -1,8 +1,9 @@
 FROM php:8.4-fpm-alpine
 
-RUN apk add --no-cache nginx imap-dev openssl-dev krb5-dev \
-    && docker-php-ext-configure imap --with-kerberos --with-imap-ssl \
-    && docker-php-ext-install imap opcache
+ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
+RUN chmod +x /usr/local/bin/install-php-extensions \
+    && apk add --no-cache nginx \
+    && install-php-extensions imap opcache
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
